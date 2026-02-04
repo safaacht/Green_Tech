@@ -20,18 +20,16 @@ class LoginController
             'password'=>$request->password
         ]);
 
-        if(Auth::attempt()){
-            $request->session()->regenerate();
-
-            if($check){
+        
+        
+        if($check){
+                $request->session()->regenerate();
                 if(Auth::user()->role=="admin"){
-                    return redirect('admin.dashboard');
+                    return redirect()->route('admin.dashboard');
                 }else{
                     return redirect()->route('client');
                 }
-            }
-            
-        }else{
+            }else{
             return redirect()->back()->with("error","Email or password is incorrect");
 
         }
