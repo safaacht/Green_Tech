@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,9 +12,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product=new Product();
-        $products=$product->all();
-        return view('product.index',compact('products'));
+        $products = Product::all();
+        $categories = Category::all();
+        return view('product.index', compact('products', 'categories'));
     }
 
     /**
@@ -21,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $categories = Category::all();
+        return view('product.create', compact('categories'));
     }
 
     /**
@@ -35,6 +37,8 @@ class ProductController extends Controller
             $product->price=$request['price'];
             $product->category_id=$request['category_id'];
             $product->save();
+
+            return redirect()->route('products.index')->with('success', 'Produit ajouté avec succès !');
     }
 
     /**
@@ -42,8 +46,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-            $product=new Product();
-            $product=$product->find($id);
+            $product=Product::findOrFail($id);
             return view('product.show',compact('product'));
     }
 
@@ -52,9 +55,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-            $product=new Product();
-            $product=$product->find($id);
-            return view('product.edit',compact('product')); 
+            $product=Product::findOrFail($id);
+            $categories = Category::all();
+            return view('product.edit',compact('product', 'categories')); 
     }
 
     /**
@@ -62,13 +65,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-            $product=new Product();
-            $product=$product->find($id);
+            $product=Product::findOrFail($id);
             $product->name=$request['name'];
             $product->description=$request['description'];
             $product->price=$request['price'];
             $product->category_id=$request['category_id'];
             $product->save();
+
+            return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès !');
     }
 
     /**
@@ -76,8 +80,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-            $product=new Product();
-            $product=$product->find($id);
+            $product=Product::findOrFail($id);
             $product->delete();
+            return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès !');
     }
 }
