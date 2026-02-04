@@ -12,8 +12,8 @@
         <a href="{{ url('/') }}" class="hover:text-green-200 font-medium">Accueil</a>
         <a href="{{ route('products.index') }}" class="hover:text-green-200 font-medium">Catalogue</a>
         
-        <a href="#" class="hover:text-green-200 font-medium">Login</a>
-        <a href="#" class="hover:text-green-200 font-medium">Sign in</a>
+        <a href="{{ route('auth.login') }}" class="hover:text-green-200 font-medium">Login</a>
+        <a href="{{ route('auth.register') }}" class="hover:text-green-200 font-medium">Sign up</a>
     </div>
 </nav>
 
