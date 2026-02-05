@@ -13,4 +13,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function favoris()
+    {
+        return $this->belongsTo(Favoris::class);
+    }
 }
