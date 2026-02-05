@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -13,7 +13,7 @@ class LoginController
     public function create(){
         return view('auth.login');
     }
-    public function store(Request $request){
+    public function store(LoginRequest $request){
         $check= Auth::attempt([
         
             'email'=>$request->email,
