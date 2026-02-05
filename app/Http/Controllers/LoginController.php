@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
-class LoginController
+class LoginController extends Controller
 {
     public function create(){
         return view('auth.login');
@@ -33,5 +33,14 @@ class LoginController
             return redirect()->back()->with("error","Email or password is incorrect");
 
         }
+    }
+
+    public function destroy(){
+         Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('login.create');
     }
 }
