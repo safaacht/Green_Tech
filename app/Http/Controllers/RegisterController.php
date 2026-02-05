@@ -23,6 +23,6 @@ class RegisterController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect()->route('admin.dashoard');
+        return redirect()->route('admin.dashboard');
     }
 }
