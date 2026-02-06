@@ -22,9 +22,6 @@
         </div>
 
         <div class="flex flex-col gap-3">
-            <a href="#" class="block w-full text-center bg-green-600 text-white font-semibold py-3 rounded-lg hover:bg-green-700 transition">
-                Ajouter au favoris
-            </a>
             
             <div class="flex gap-3">
                 <a href="{{ route('products.edit', $product->id) }}" class="flex-1 text-center bg-yellow-500 text-white font-semibold py-3 rounded-lg hover:bg-yellow-600 transition">
