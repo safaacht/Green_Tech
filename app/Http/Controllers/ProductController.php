@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Services\ProductService;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, ProductService $productService)
     {
-        $products = Product::all();
+        $search = $request->query("search");
+        $category = $request->query("category");
+        $products = $productService->getProductsBy($search, $category);
         $categories = Category::all();
         return view('product.index', compact('products', 'categories'));
     }
