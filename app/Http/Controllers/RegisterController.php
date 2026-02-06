@@ -17,12 +17,13 @@ class RegisterController extends Controller
 
     public function store(RegisterRequest $request){
         $user=User::create([
-            'username'=>$request->username,
+            'name'=>$request->username,
             'email'=>$request->email,
-            'password'=>$request->password
+            'password'=>Hash::make($request->password),
+            'role'=>'client'
         ]);
 
         Auth::login($user);
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('products.index');
     }
 }
