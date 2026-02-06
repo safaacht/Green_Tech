@@ -16,9 +16,22 @@
     <div class="space-x-4 flex items-center">
         <a href="{{ url('/') }}" class="hover:text-green-200 font-medium">Accueil</a>
         <a href="{{ route('products.index') }}" class="hover:text-green-200 font-medium">Catalogue</a>
-        
-        <a href="{{ route('login.create') }}" class="hover:text-green-200 font-medium">Login</a>
-        <a href="{{ route('register.create') }}" class="hover:text-green-200 font-medium">Sign up</a>
+        @guest
+            <a href="{{ route('login.create') }}" class="hover:text-green-200 font-medium">Login</a>
+            <a href="{{ route('register.create') }}" class="hover:text-green-200 font-medium">Sign up</a>
+        @endguest
+
+        @auth
+            @if(Auth::user()->role == 'admin')
+                <a href="{{ route('admin.dashboard') }}" class="hover:text-green-200 font-medium">Dashboard</a>
+            @else
+                <a href="{{ url('/client') }}" class="hover:text-green-200 font-medium">Favoris</a>
+            @endif
+            <form action="{{ route('destroy') }}" method="POST" class="inline">
+                @csrf
+                <button type="submit" class="hover:text-green-200 font-medium">Logout</button>
+            </form>
+        @endauth
     </div>
 </nav>
 
