@@ -3,13 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response as FacadesResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class AuthZMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,11 +15,6 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->hasAnyRole(['admin', 'Éditeur', 'Gestionnaire'])){
-            return $next($request);
-        }
-
-        abort(403, 'Forbidden');
+        return $next($request);
     }
-    
 }
