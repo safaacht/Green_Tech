@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Services\ProductService;
 use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -26,6 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        Gate::authorize('product-create');
         $categories = Category::all();
         return view('product.create', compact('categories'));
     }
@@ -35,6 +37,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+            Gate::authorize('product-create');
             $product=new Product();
             $product->name=$request['name'];
             $product->description=$request['description'];
@@ -59,6 +62,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
+            Gate::authorize('product-edit');
             $product=Product::findOrFail($id);
             $categories = Category::all();
             return view('product.edit',compact('product', 'categories')); 
@@ -69,6 +73,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+            Gate::authorize('product-edit');
             $product=Product::findOrFail($id);
             $product->name=$request['name'];
             $product->description=$request['description'];
@@ -84,6 +89,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
+            Gate::authorize('product-delete');
             $product=Product::findOrFail($id);
             $product->delete();
             return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès !');
