@@ -22,12 +22,23 @@
         @endguest
 
         @auth
-            @if(Auth::user()->role == 'admin')
+            <div class="flex items-center space-x-4 border-r pr-4 border-green-600 mr-2">
+                <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
+                @foreach(Auth::user()->roles as $role)
+                    <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold bg-green-800 text-green-100 rounded-full border border-green-600">
+                        {{ $role->name }}
+                    </span>
+                @endforeach
+            </div>
+
+            @hasanyrole(['admin', 'Éditeur', 'Gestionnaire'])
                 <a href="{{ route('admin.dashboard') }}" class="hover:text-green-200 font-medium">Dashboard</a>
-            @else
+            @endhasanyrole
+            
+            @hasrole('client')
                 <a href="{{ url('/client') }}" class="hover:text-green-200 font-medium">Favoris</a>
-            @endif
-            <form action="{{ route('destroy') }}" method="POST" class="inline">
+            @endhasrole
+            <form action="{{ route('logout') }}" method="POST" class="inline">
                 @csrf
                 <button type="submit" class="hover:text-green-200 font-medium">Logout</button>
             </form>

@@ -24,9 +24,12 @@
         <div class="flex flex-col gap-3">
             
             <div class="flex gap-3">
+                @can('product-edit')
                 <a href="{{ route('products.edit', $product->id) }}" class="flex-1 text-center bg-yellow-500 text-white font-semibold py-3 rounded-lg hover:bg-yellow-600 transition">
                     Modifier
                 </a>
+                @endcan
+                @can('product-delete')
                 <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Êtes-vous sûr ?');">
                     @csrf
                     @method('DELETE')
@@ -34,6 +37,7 @@
                         Supprimer
                     </button>
                 </form>
+                @endcan
             </div>
             
             <a href="{{ route('products.index') }}" class="block w-full text-center text-gray-500 hover:text-gray-700 mt-4">

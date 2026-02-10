@@ -4,9 +4,11 @@
 <div class="flex flex-col gap-8">
     <div class="flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+        @can('product-create')
         <a href="{{ route('products.create') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-medium">
             <i class="fas fa-plus mr-2"></i> Ajouter un Produit
         </a>
+        @endcan
     </div>
 
     <!-- Stats Cards -->
@@ -33,18 +35,33 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        @role('admin')
+        <a href="{{ route('users.index') }}" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-green-300 transition group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Utilisateurs</p>
                     <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $stats['total_users'] }}</h3>
+                    <p class="text-xs text-green-600 mt-2 font-medium opacity-0 group-hover:opacity-100 transition">Gérer les utilisateurs <i class="fas fa-arrow-right ml-1"></i></p>
                 </div>
-                <div class="bg-purple-100 p-3 rounded-lg text-purple-600">
+                <div class="bg-purple-100 p-3 rounded-lg text-purple-600 group-hover:bg-purple-200 transition">
                     <i class="fas fa-users text-xl"></i>
                 </div>
             </div>
-        </div>
+        </a>
 
+        <a href="{{ route('roles.index') }}" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-green-300 transition group">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 font-medium">Rôles & Permissions</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1">Spatie</h3>
+                    <p class="text-xs text-green-600 mt-2 font-medium opacity-0 group-hover:opacity-100 transition">Gérer les rôles <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+                <div class="bg-orange-100 p-3 rounded-lg text-orange-600 group-hover:bg-orange-200 transition">
+                    <i class="fas fa-shield-alt text-xl"></i>
+                </div>
+            </div>
+        </a>
+        @endrole
     </div>
 
     <!-- Management Table -->
@@ -81,9 +98,12 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex justify-end gap-2">
+                                @can('product-edit')
                                 <a href="{{ route('products.edit', $product->id) }}" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Modifier">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                @endcan
+                                @can('product-delete')
                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr ?')">
                                     @csrf
                                     @method('DELETE')
@@ -91,6 +111,7 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>
