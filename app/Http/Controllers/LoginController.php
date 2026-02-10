@@ -24,7 +24,7 @@ class LoginController extends Controller
         
         if($check){
                 $request->session()->regenerate();
-                if(Auth::user()->role=="admin"){
+                if(Auth::user()->hasAnyRole(['admin', 'Éditeur', 'Gestionnaire'])){
                     return redirect()->route('admin.dashboard');
                 }else{
                     return redirect()->route('client');
