@@ -22,6 +22,7 @@ class RegisterController extends Controller
             'password'=>Hash::make($request->password)
         ]);
 
+        $user->assignRole('client');
         Auth::login($user);
         return redirect()->route('products.index');
     }
