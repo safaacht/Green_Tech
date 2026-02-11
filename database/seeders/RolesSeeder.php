@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
 {
@@ -20,13 +22,13 @@ class RolesSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            \Spatie\Permission\Models\Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
-        $admin = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'admin']);
-        $client = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'client']);
-        $editeur = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Éditeur']);
-        $gestionnaire = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Gestionnaire']);
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $client = Role::firstOrCreate(['name' => 'client']);
+        $editeur = Role::firstOrCreate(['name' => 'Éditeur']);
+        $gestionnaire = Role::firstOrCreate(['name' => 'Gestionnaire']);
 
         
         $admin->syncPermissions($permissions);
