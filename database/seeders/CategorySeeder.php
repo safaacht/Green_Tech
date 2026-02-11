@@ -14,12 +14,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::insert([
-            ['name'=>'Plantes'],
-            ['name'=>'Graines'],
-            ['name'=>'Outils']
-        ]);
-
-        // DB::table('categories')->insert($categories);
+        $categories = ['Plantes', 'Graines', 'Outils'];
+        foreach ($categories as $name) {
+            Category::firstOrCreate(['name' => $name]);
+        }
     }
 }
