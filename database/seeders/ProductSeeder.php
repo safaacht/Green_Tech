@@ -13,6 +13,16 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory()->create();
+        $category = \App\Models\Category::first();
+        if ($category) {
+            \App\Models\Product::firstOrCreate(
+                ['name' => 'Plante Aloe Vera'],
+                [
+                    'description' => 'Une plante médicinale facile à entretenir.',
+                    'price' => 150.00,
+                    'category_id' => $category->id,
+                ]
+            );
+        }
     }
 }
